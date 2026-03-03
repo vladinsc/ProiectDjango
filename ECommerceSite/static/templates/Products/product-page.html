@@ -1,0 +1,189 @@
+{% extends "../master.html" %}
+{% block title %} {{name}} {% endblock %}
+{% block other %}
+    <style>
+  .product-image {
+    max-width: 300px;
+    height: auto;
+    margin: 10px;
+    border-radius: 10px;
+    object-fit: cover;
+    display: inline-block;
+  }
+</style>
+ {% endblock %}
+{% block content %}
+
+<!--    <div data-reflow-type="product">-->
+<!--        <div class="product-image">-->
+<!--        {% for image in imagesurls %}-->
+<!--        <img src="{{image}}" class="product-image">-->
+<!--        {%empty%}-->
+<!--        EMPTY NO IMAGE-->
+<!--        {% endfor %}-->
+<!--            </div>-->
+
+<!--        {{ name}} - {{price}}-->
+<!--        <form class="text-center" method="post" action="{% url 'addToCart' id %}">-->
+<!--            {% csrf_token %}-->
+<!--            <div class="mb-3"><button class="btn btn-primary w-100 d-block" type="submit">Add to Cart</button></div>-->
+<!--        </form>-->
+<!--    </div>-->
+        <div class="product-image">
+        {% for image in imagesurls %}
+        <img src="{{image}}" class="product-image">
+        {%empty%}
+        EMPTY NO IMAGE
+        {% endfor %}
+            </div>
+        <a>{{ product.name }} - {{product.price}}</a>
+
+        <span class="in-cart-badge in-cart-badge-placeholder" style="display:none;">In cos</span>
+
+        <p>Stoc: {{ product.stock }} buc</p>
+
+        {% if product.stock == 0 %}
+            <p class="out-of-stock-text" style="color: red; font-weight: bold;">Indisponibil</p>
+        {% else %}
+            <div class="cart-controls">
+
+                <button class="btn btn-primary btn-sm"
+                        onclick="addToCart({{ product.id }}, {{ product.stock }})">
+                    Adauga in cos
+                </button>
+
+                <div class="mt-2">
+                    <button class="btn btn-secondary btn-sm" onclick="changeQty({{ product.id }}, -1, {{ product.stock }})">-</button>
+                    <input type="number" class="qty-input" id="qnt-id-{{product.id}}" style="width: 50px;" value="1" min="1" onchange="setQty({{ product.id }}, this.value, {{ product.stock }})">
+                    <button class="btn btn-secondary btn-sm" onclick="changeQty({{ product.id }}, 1, {{ product.stock }})">+</button>
+                    <button class="btn btn-danger btn-sm" onclick="removeFromCart({{ product.id }})">Sterge</button>
+                </div>
+            </div>
+        {% endif %}
+<script>
+    if (typeof window.productsData === 'undefined') {
+        window.productsData = {}; }
+    window.productsData[{{ product.id }}] = {{ product.to_json|safe }};
+
+    const CART_KEY = 'my_shop_cart_v1';
+
+function getCart() {
+    return JSON.parse(localStorage.getItem(CART_KEY)) || {};
+}
+function saveCart(cart) {
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    updateUI();
+}
+
+function addToCart(id, maxStock) {
+    if (maxStock <= 0) {
+        alert("Produsul este indisponibil!");
+        return;
+    }
+
+
+    let productData = window.productsData[id];
+    if (!productData) {
+        console.error("Eroare: Nu am găsit datele pentru produsul " + id);
+        return;
+    }
+
+    let cart = getCart();
+
+    if (!cart[id]) {
+        cart[id] = {
+            quantity: 1,
+            details: productData
+        };
+    } else {
+        if (cart[id].quantity < maxStock) {
+            cart[id].quantity++;
+        } else {
+            alert(`Nu puteți adauga mai mult de ${maxStock} bucati!`);
+        }
+    }
+    saveCart(cart);
+}
+
+function changeQty(id, amount, maxStock) {
+    let cart = getCart();
+    if (!cart[id]) return;
+
+    let newQuantity = cart[id].quantity + amount;
+    if (newQuantity > maxStock) {
+        alert("Stoc insuficient!");
+        newQuantity = maxStock;
+    }
+
+    if (newQuantity <= 0) {
+        removeFromCart(id); // Daca ajunge la 0, stergem
+    } else {
+        cart[id].quantity = newQuantity;
+        saveCart(cart);
+    }
+    let inputField = document.getElementById('qnt-id-' + id);
+    console.log('qnt-id-' + id)
+
+    if (inputField) {
+
+        console.log(inputField.value)
+        inputField.value = newQuantity;
+        console.log(inputField.value)
+    }
+    else {
+        console.warn("Nu am gasit inputul pentru produsul " + id);
+    }
+}
+
+function setQty(id, value, maxStock) {
+    let cart = getCart();
+    if (!cart[id]) return;
+
+    let newQty = parseInt(value);
+
+    if (isNaN(newQty) || newQty <= 0) {
+        removeFromCart(id);
+        return;
+    }
+
+    if (newQty > maxStock) {
+        alert("Cantitatea depaseste stocul!");
+        newQty = maxStock;
+    }
+
+    cart[id].quantity = newQty;
+    saveCart(cart);
+}
+
+function removeFromCart(id) {
+    let cart = getCart();
+    delete cart[id];
+    saveCart(cart);
+}
+
+function updateUI() {
+    let cart = getCart();
+
+    document.querySelectorAll('.product-card').forEach(card => {
+        let id = card.dataset.id;
+
+        if (cart[id]) {
+            card.classList.add('in-cart-border');
+            let badge = card.querySelector('.in-cart-badge-placeholder');
+            if(badge) badge.style.display = 'inline-block';
+        } else {
+            card.classList.remove('in-cart-border');
+            let badge = card.querySelector('.in-cart-badge-placeholder');
+            if(badge) badge.style.display = 'none';
+        }
+    });
+
+    let totalItems = Object.values(cart).reduce((acc, item) => acc + item.quantity, 0);
+    let navBadge = document.getElementById('nav-cart-count');
+    if(navBadge) navBadge.innerText = totalItems;
+}
+document.addEventListener('DOMContentLoaded', () => {
+    updateUI();
+});
+</script>
+{% endblock %}

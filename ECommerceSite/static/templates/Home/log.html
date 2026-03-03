@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>log</title>
+</head>
+<body>
+  {% for acc in listaacc %}
+    <p>[id: {{acc.id}}] [ip: {{acc.ip_client}}] [url: {{acc.url}}]  </p>
+    {% endfor %}
+
+</body>

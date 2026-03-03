@@ -1,0 +1,17 @@
+{% extends '../master.html' %}
+
+{% block content %}
+<div style="text-align: center; margin-top: 50px;">
+    <h1>Confirmare Email</h1>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <a href="{% url 'login' %}" class="btn btn-primary">Mergi la Autentificare</a>
+</div>
+{% endblock %}

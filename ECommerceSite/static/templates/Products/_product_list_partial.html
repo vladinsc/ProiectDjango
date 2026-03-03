@@ -1,0 +1,61 @@
+
+{% load query_params %}
+<div class="product-list">
+    {% if messages %}
+    {% for message in messages %}
+        <a>{{message}}</a>
+    {% endfor %}
+    {%endif%}
+    {% for product in products %}
+
+    <script>
+        window.productsData[{{ product.id }}] = {{ product.to_json|safe }};
+    </script>
+
+    <li class="product-card" data-id="{{ product.id }}">
+        <img class="product-image" src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
+        <a href="{% url 'product' product.slug%}">{{ product.name }} - {{product.price}}</a>
+
+        <span class="in-cart-badge in-cart-badge-placeholder" style="display:none;">In cos</span>
+
+        <p>Stoc: {{ product.stock }} buc</p>
+
+        {% if product.stock == 0 %}
+            <p class="out-of-stock-text" style="color: red; font-weight: bold;">Indisponibil</p>
+        {% else %}
+            <div class="cart-controls">
+
+                <button class="btn btn-primary btn-sm"
+                        onclick="addToCart({{ product.id }}, {{ product.stock }})">
+                    Adauga in cos
+                </button>
+
+                <div class="mt-2">
+                    <button class="btn btn-secondary btn-sm" onclick="changeQty({{ product.id }}, -1, {{ product.stock }})">-</button>
+                    <input type="number" class="qty-input" id="qnt-id-{{product.id}}" style="width: 50px;" value="1" min="1" onchange="setQty({{ product.id }}, this.value, {{ product.stock }})">
+                    <button class="btn btn-secondary btn-sm" onclick="changeQty({{ product.id }}, 1, {{ product.stock }})">+</button>
+                    <button class="btn btn-danger btn-sm" onclick="removeFromCart({{ product.id }})">Sterge</button>
+                </div>
+            </div>
+        {% endif %}
+    {% empty %}
+
+        <p>Nu s au gasit produse care sa corespunda filtrelor selectate.</p>
+    {% endfor %}
+</div>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if products.has_previous %}
+            <a class="ajax-link" href="?{{ query_params | remove_page_param }}&page=1">&laquo; prima</a>
+            <a class="ajax-link" href="?{{ query_params | remove_page_param }}&page={{ products.previous_page_number }}">precedenta</a>
+        {% endif %}
+        <span class="current">
+            Pagina {{ products.number }} din {{ products.paginator.num_pages }}.
+        </span>
+        {% if products.has_next %}
+            <a class="ajax-link" href="?{{ query_params | remove_page_param }}&page={{ products.next_page_number }}">urmatoarea</a>
+            <a class="ajax-link" href="?{{ query_params | remove_page_param }}&page={{ products.paginator.num_pages }}">ultima &raquo;</a>
+        {% endif %}
+    </span>
+</div>

@@ -1,0 +1,8 @@
+Salutare {{ username }},
+
+Avem o oferta speciala pentru tine!
+Ai o reducere de {{ valoare_discount }}% la produsele din categoria {{categorie}}
+,folosind codul: {{ cod }}
+
+Oferta expira la data de: {{ data_expirare }}
+

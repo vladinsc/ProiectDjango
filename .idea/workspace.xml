@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="807fa7e2-3a50-4108-bfee-540e0fa539bf" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/Proiect.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/Account/middlewares.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/Account/signals.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/Account/templatetags/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/Account/templatetags/auth_extras.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/Account/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/Cart/signals.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/Cart/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/ECommerceSite/sitemaps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/ECommerceSite/tasks.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/ECommerceSite/utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/ECommerceSite/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/Home/management/commands/start_jobs.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/Home/middlewares.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/Products/context_processors.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/Products/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/Products/templatetags/query_params.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/Promotions/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/Promotions/tasks.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/Promotions/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/assets/bootstrap/css/bootstrap.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/assets/bootstrap/js/bootstrap.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/assets/css/Navbar-Right-Links-icons.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/assets/fonts/fa-brands-400.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/assets/fonts/fa-brands-400.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/assets/fonts/fa-brands-400.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/assets/fonts/fa-brands-400.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/assets/fonts/fa-brands-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/assets/fonts/fa-regular-400.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/assets/fonts/fa-regular-400.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/assets/fonts/fa-regular-400.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/assets/fonts/fa-regular-400.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/assets/fonts/fa-regular-400.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/assets/fonts/fa-solid-900.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/assets/fonts/fa-solid-900.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/assets/fonts/fa-solid-900.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/assets/fonts/fa-solid-900.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/assets/fonts/fa-solid-900.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/assets/fonts/fontawesome-all.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/assets/img/iphone_17__ck7zzemcw37m_large_2x.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/assets/js/bs-init.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/templates/Account/confirmation_email.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/templates/Account/email_confirmat_succes.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/templates/Account/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/templates/Account/register.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/templates/Cart/factura.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/templates/Cart/viewcart.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/templates/Home/contact.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/templates/Home/home.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/templates/Home/info.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/templates/Home/log.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/templates/Products/add_product.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/templates/Products/oferta.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/templates/Promotions/promotie_personalizata.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/templates/Utils/403.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ECommerceSite/static/templates/master.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="33WgcmKoZ8IYD8x9lAWTPtkCsZr" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "JavaScript Debug.index.html.executor": "Run",
+    "JavaScript Debug.info.html.executor": "Run",
+    "Python.models.executor": "Run",
+    "Python.settings.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/fac/an2/sem1/DezvApWebDjango/Proiect",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\fac\an2\sem1\DezvApWebDjango\Proiect" />
+      <recent name="C:\fac\an2\sem1\DezvApWebDjango\Proiect\.venv" />
+      <recent name="C:\fac\an2\sem1\DezvApWebDjango\Proiect\ECommerceSite\static\templates\Home" />
+      <recent name="C:\fac\an2\sem1\DezvApWebDjango\Proiect\ECommerceSite\media\products\8\images" />
+      <recent name="C:\fac\an2\sem1\DezvApWebDjango\Proiect\ECommerceSite\static\templates\Products" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\fac\an2\sem1\DezvApWebDjango\Proiect\ECommerceSite\Home" />
+      <recent name="C:\fac\an2\sem1\DezvApWebDjango\Proiect\ECommerceSite\ECommerceSite" />
+      <recent name="C:\fac\an2\sem1\DezvApWebDjango\Proiect\ECommerceSite\static\templates\Promotions" />
+      <recent name="C:\fac\an2\sem1\DezvApWebDjango\Proiect\ECommerceSite\Promotions" />
+      <recent name="C:\fac\an2\sem1\DezvApWebDjango\Proiect" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.23339.19" />
+        <option value="bundled-python-sdk-0029f7779945-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.23339.19" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="807fa7e2-3a50-4108-bfee-540e0fa539bf" name="Changes" comment="" />
+      <created>1759438323629</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1759438323629</updated>
+      <workItem from="1759438325001" duration="2147000" />
+      <workItem from="1759447475011" duration="4898000" />
+      <workItem from="1759493568324" duration="3740000" />
+      <workItem from="1759510428304" duration="24427000" />
+      <workItem from="1759605886824" duration="991000" />
+      <workItem from="1759932455365" duration="255000" />
+      <workItem from="1759987703388" duration="4198000" />
+      <workItem from="1759994934866" duration="112000" />
+      <workItem from="1759995149127" duration="3235000" />
+      <workItem from="1760790316216" duration="923000" />
+      <workItem from="1760797552224" duration="29000" />
+      <workItem from="1761247754625" duration="648000" />
+      <workItem from="1761304385218" duration="3658000" />
+      <workItem from="1761654965161" duration="12585000" />
+      <workItem from="1761727782611" duration="3627000" />
+      <workItem from="1761767996902" duration="2135000" />
+      <workItem from="1761776850863" duration="985000" />
+      <workItem from="1761815467977" duration="625000" />
+      <workItem from="1762418231063" duration="3117000" />
+      <workItem from="1762709578191" duration="2661000" />
+      <workItem from="1762712456675" duration="117000" />
+      <workItem from="1762712915967" duration="206000" />
+      <workItem from="1762896311839" duration="190000" />
+      <workItem from="1762896537990" duration="3151000" />
+      <workItem from="1762902943497" duration="24489000" />
+      <workItem from="1763034965384" duration="20737000" />
+      <workItem from="1763390402555" duration="9911000" />
+      <workItem from="1763422225423" duration="4500000" />
+      <workItem from="1763559673949" duration="7008000" />
+      <workItem from="1763572514751" duration="16000" />
+      <workItem from="1763579314413" duration="18172000" />
+      <workItem from="1763634944170" duration="6899000" />
+      <workItem from="1763651885588" duration="311000" />
+      <workItem from="1764233791764" duration="4006000" />
+      <workItem from="1764429065956" duration="8461000" />
+      <workItem from="1764534500519" duration="4424000" />
+      <workItem from="1764594249543" duration="21995000" />
+      <workItem from="1764665078891" duration="8124000" />
+      <workItem from="1764836846530" duration="4695000" />
+      <workItem from="1765101385564" duration="5506000" />
+      <workItem from="1765272896892" duration="639000" />
+      <workItem from="1765368872259" duration="5833000" />
+      <workItem from="1765394450133" duration="7841000" />
+      <workItem from="1767829449192" duration="3051000" />
+      <workItem from="1767850241875" duration="2101000" />
+      <workItem from="1768226405527" duration="5604000" />
+      <workItem from="1768386403486" duration="21555000" />
+      <workItem from="1768431792832" duration="807000" />
+      <workItem from="1768467689340" duration="3714000" />
+      <workItem from="1768927984104" duration="111000" />
+      <workItem from="1772567671934" duration="289000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Proiect$models.coverage" NAME="models Coverage Results" MODIFIED="1762420717311" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ECommerceSite/Orders" />
+    <SUITE FILE_PATH="coverage/Proiect$settings.coverage" NAME="settings Coverage Results" MODIFIED="1762712543160" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ECommerceSite/ECommerceSite" />
+  </component>
+</project>

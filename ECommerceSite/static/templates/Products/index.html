@@ -1,0 +1,375 @@
+{% extends "../master.html" %}
+{%block title %} Products {% endblock %}
+{% block other %}
+    <style>
+  .product-image {
+    max-width: 300px;
+    height: 150px;
+      width: 150px;
+    margin: 10px;
+    border-radius: 10px;
+    object-fit: cover;
+    display: inline-block;
+  }
+</style>
+{% endblock %}
+{% block content %}
+{%if user.is_authenticated %}
+    <div id="offer-banner" style="display: none; position: fixed; bottom: 0; left: 0; width: 100%; background-color: #00bbff; color: white; text-align: center; padding: 20px; box-shadow: 0 -2px 10px rgba(0,0,0,0.2);z-index: 1000; cursor: pointer;">
+        <h2 style="margin: 0;"> OFERTA REDUCERE 50%! </h2>
+        <p>Click aici pentru a activa reducerea!</p>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+        var chance = Math.random();
+        if (chance < 0.3) {
+            var banner = document.getElementById("offer-banner");
+            banner.style.display = "block";
+            banner.addEventListener("click", function() {
+                window.location.href = "{% url 'claim_offer' %}";
+            });
+        }
+    });
+    </script>
+{% endif %}
+    <div><a class="btn btn-primary" data-bs-toggle="collapse" aria-expanded="true" aria-controls="collapse-2" href="#collapse-2" role="button">Filters</a>
+        <div class="collapse show" id="collapse-2">
+            <h2>
+    {% if current_category %}
+        Produse din: {{ current_category.name }}
+    {% else %}
+        Toate Produsele
+    {% endif %}
+</h2>
+
+<div class="filter-form-container">
+    <form method="GET" action="">
+        {% if request.GET.sort %}
+            <input type="hidden" name="sort" value="{{ request.GET.sort }}">
+        {% endif %}
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <div class="form-row">
+            <div>
+                {{ form.name.label_tag }}
+                {{ form.name }}
+                {% if form.name.errors %}<div class="error">{{ form.name.errors }}</div>{% endif %}
+            </div>
+            <div>
+                {{ form.min_price.label_tag }}
+                {{ form.min_price }}
+                {% if form.min_price.errors %}<div class="error">{{ form.min_price.errors }}</div>{% endif %}
+            </div>
+            <div>
+                {{ form.max_price.label_tag }}
+                {{ form.max_price }}
+                {% if form.max_price.errors %}<div class="error">{{ form.max_price.errors }}</div>{% endif %}
+            </div>
+
+            <div>
+                {% if current_category %}
+                    <input type="hidden" name="category" value="{{ current_category.id }}">
+                {% else %}
+                    {{ form.category.label_tag }}
+                    {{ form.category }}
+                    {% if form.category.errors %}<div class="error">{{ form.category.errors }}</div>{% endif %}
+                {% endif %}
+            </div>
+
+            <div>
+                {{ form.stoc.label_tag }}
+                {{ form.stoc }}
+                {% if form.stoc.errors %}<div class="error">{{ form.stoc.errors }}</div>{% endif %}
+            </div>
+            <div>
+                {{ form.items_per_page.label_tag }}
+                {{ form.items_per_page }}
+                {% if form.items_per_page.errors %}<div class="error">{{ form.items_per_page.errors }}</div>{% endif %}
+            </div>
+        </div>
+
+        <button type="submit">Filtreaza</button>
+
+        {% if current_category %}
+            {% url 'products_category' current_category.slug as reset_url %}
+        {% else %}
+            {% url 'products' as reset_url %}
+        {% endif %}
+
+        <a href="{{reset_url}}" class="button" id="reset-filter-btn">Reseteaza Filtrele</a>
+
+    </form>
+</div>
+
+<hr>
+        </div>
+    </div>
+    <div id="product-list-container" data-reflow-type="product-list" data-reflow-order="date_desc">
+        <ul>
+<!--            {% for product in products%}-->
+<!--            <li class="product-card" data-id="{{ product.id }}">-->
+<!--                <img class="product-image" src="{{ product.images.first.image.url }}" alt="{{ product.name }}" style="width:150px;height:150px;"><a href="{% url 'product' product.slug%}">{{ product.name }} - {{product.price}}</a>-->
+<!--                <p>Stoc: {{ product.stock }} buc</p>-->
+<!--                {% if product.stock == 0 %}-->
+<!--                    <p class="out-of-stock-text">Indisponibil</p>-->
+
+<!--                {% else %}-->
+<!--                    <div class="cart-controls">-->
+<!--                        <button class="btn btn-primary btn-sm" onclick='addToCart( {{ product.id }}, {{ product.stock }}, {{ product.to_json|escapejs }} )'>Adauga in cos</button>-->
+
+<!--                        <div class="mt-2">-->
+<!--                            <button class="btn btn-secondary btn-sm" onclick="changeQty({{ product.id }}, -1, {{ product.stock }})">-</button>-->
+<!--                            <input type="number" class="qty-input" style="width: 50px;" value="1" min="1" onchange="setQty({{ product.id }}, this.value, {{ product.stock }})">-->
+<!--                            <button class="btn btn-secondary btn-sm" onclick="changeQty({{ product.id }}, 1, {{ product.stock }})">+</button>-->
+<!--                            <button class="btn btn-danger btn-sm" onclick="removeFromCart({{ product.id }})">Sterge</button>-->
+<!--                        </div>-->
+<!--                        <span class="in-cart-badge in-cart-badge-placeholder" id="in-cart-badge" style="display:none;">In cos</span>-->
+<!--                    </div>-->
+<!--                {% endif %}-->
+<!--            </li>-->
+<!--            {% empty %}-->
+<!--            <li>No products found.</li>-->
+<!--            {% endfor %}-->
+
+
+            <script>
+    if (typeof window.productsData === 'undefined') {
+        window.productsData = {};
+    }
+</script>
+    {% for product in products %}
+
+    <script>
+        window.productsData[{{ product.id }}] = {{ product.to_json|safe }};
+    </script>
+
+    <li class="product-card" data-id="{{ product.id }}">
+        <img class="product-image" src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
+        <a href="{% url 'product' product.slug%}">{{ product.name }} - {{product.price}}</a>
+
+        <span class="in-cart-badge in-cart-badge-placeholder" style="display:none;">In cos</span>
+
+        <p>Stoc: {{ product.stock }} buc</p>
+
+        {% if product.stock == 0 %}
+            <p class="out-of-stock-text" style="color: red; font-weight: bold;">Indisponibil</p>
+        {% else %}
+            <div class="cart-controls">
+
+                <button class="btn btn-primary btn-sm"
+                        onclick="addToCart({{ product.id }}, {{ product.stock }})">
+                    Adauga in cos
+                </button>
+
+                <div class="mt-2">
+                    <button class="btn btn-secondary btn-sm" onclick="changeQty({{ product.id }}, -1, {{ product.stock }})">-</button>
+                    <input type="number" class="qty-input" id="qnt-id-{{product.id}}" style="width: 50px;" value="1" min="1" onchange="setQty({{ product.id }}, this.value, {{ product.stock }})">
+                    <button class="btn btn-secondary btn-sm" onclick="changeQty({{ product.id }}, 1, {{ product.stock }})">+</button>
+                    <button class="btn btn-danger btn-sm" onclick="removeFromCart({{ product.id }})">Sterge</button>
+                </div>
+            </div>
+        {% endif %}
+    </li>
+    {% empty %}
+    <li>No products found.</li>
+    {% endfor %}
+</ul>
+        </ul>
+    </div>
+    <nav>
+        <div class="pagination">
+    {% if page_obj.has_previous %}
+        <a href="?page=1">First</a>
+        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    {% endif %}
+
+    <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+    {% endif %}
+        </div>
+    </nav>
+   {% endblock %}
+{% block js %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('.filter-form-container form');
+        const container = document.getElementById('product-list-container');
+
+        async function updateProducts(url) {
+            try {
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Eroare raspuns');
+                }
+
+                const html = await response.text();
+                container.innerHTML = html;
+                updateUI();
+                window.history.pushState({}, '', url);
+
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
+        }
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(form);
+            // if(formData.get("items_per_page").toString() == '{{previous_items_per_page}}' ){
+            //     formData.set("items_per_page") == "None";
+            // }
+            const params = new URLSearchParams(formData);
+            const url = window.location.pathname + '?' + params.toString();
+
+            updateProducts(url);
+        });
+        container.addEventListener('click', function(event) {
+            if (event.target.matches('.ajax-link')) {
+                event.preventDefault();
+                const url = event.target.href;
+                updateProducts(url);
+            }
+        });
+        window.addEventListener('popstate', function() {
+            updateProducts(window.location.href);
+        });
+    });
+
+const CART_KEY = 'my_shop_cart_v1';
+
+function getCart() {
+    return JSON.parse(localStorage.getItem(CART_KEY)) || {};
+}
+function saveCart(cart) {
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    updateUI();
+}
+
+function addToCart(id, maxStock) {
+    if (maxStock <= 0) {
+        alert("Produsul este indisponibil!");
+        return;
+    }
+
+
+    let productData = window.productsData[id];
+    if (!productData) {
+        console.error("Eroare: Nu am găsit datele pentru produsul " + id);
+        return;
+    }
+
+    let cart = getCart();
+
+    if (!cart[id]) {
+        cart[id] = {
+            quantity: 1,
+            details: productData
+        };
+    } else {
+        if (cart[id].quantity < maxStock) {
+            cart[id].quantity++;
+        } else {
+            alert(`Nu puteți adauga mai mult de ${maxStock} bucati!`);
+        }
+    }
+    saveCart(cart);
+}
+
+
+function changeQty(id, amount, maxStock) {
+    let cart = getCart();
+    if (!cart[id]) return;
+
+    let newQuantity = cart[id].quantity + amount;
+    if (newQuantity > maxStock) {
+        alert("Stoc insuficient!");
+        newQuantity = maxStock;
+    }
+
+    if (newQuantity <= 0) {
+        removeFromCart(id); // Daca ajunge la 0, stergem
+    } else {
+        cart[id].quantity = newQuantity;
+        saveCart(cart);
+    }
+    let inputField = document.getElementById('qnt-id-' + id);
+    console.log('qnt-id-' + id)
+
+    if (inputField) {
+
+        console.log(inputField.value)
+        inputField.value = newQuantity;
+        console.log(inputField.value)
+    }
+    else {
+        console.warn("Nu am gasit inputul pentru produsul " + id);
+    }
+}
+
+function setQty(id, value, maxStock) {
+    let cart = getCart();
+    if (!cart[id]) return;
+
+    let newQty = parseInt(value);
+
+    if (isNaN(newQty) || newQty <= 0) {
+        removeFromCart(id);
+        return;
+    }
+
+    if (newQty > maxStock) {
+        alert("Cantitatea depaseste stocul!");
+        newQty = maxStock;
+    }
+
+    cart[id].quantity = newQty;
+    saveCart(cart);
+}
+
+function removeFromCart(id) {
+    let cart = getCart();
+    delete cart[id];
+    saveCart(cart);
+}
+
+function updateUI() {
+    let cart = getCart();
+
+    document.querySelectorAll('.product-card').forEach(card => {
+        let id = card.dataset.id;
+
+        if (cart[id]) {
+            card.classList.add('in-cart-border');
+            let badge = card.querySelector('.in-cart-badge-placeholder');
+            if(badge) badge.style.display = 'inline-block';
+        } else {
+            card.classList.remove('in-cart-border');
+            let badge = card.querySelector('.in-cart-badge-placeholder');
+            if(badge) badge.style.display = 'none';
+        }
+    });
+
+    let totalItems = Object.values(cart).reduce((acc, item) => acc + item.quantity, 0);
+    let navBadge = document.getElementById('nav-cart-count');
+    if(navBadge) navBadge.innerText = totalItems;
+}
+document.addEventListener('DOMContentLoaded', () => {
+    updateUI();
+});
+</script>
+
+{% endblock %}

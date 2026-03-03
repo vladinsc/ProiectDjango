@@ -1,0 +1,14 @@
+{
+    "nume": "Ionescu",
+    "prenume": "Vlad",
+    "email": "vladinsc@icloud.com",
+    "cnp": "1981103420065",
+    "tip_mesaj": "cerere",
+    "subiect": "DECI TEST",
+    "zile_asteptare": 4,
+    "mesaj": "Test Pentru Mesaj Bla si Bla. Ionescu",
+    "varsta": "27 ani și 0 luni",
+    "urgent": true,
+    "time_received": "2025-11-19 23:14:28",
+    "user_ip": "127.0.0.1"
+}

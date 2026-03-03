@@ -1,0 +1,52 @@
+{% extends '../master.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Adauga Produs Nou</h2>
+    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">Detalii Produs</div>
+            <div class="card-body">
+                {% for field in form %}
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.help_text %}
+                            <small class="text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+                        {% if field.errors %}
+                            <div class="text-danger">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header bg-secondary text-white">Imagini Produs</div>
+            <div class="card-body">
+                {{ formset.management_form }}
+
+                <div class="row">
+                    {% for img_form in formset %}
+                        <div class="col-md-4 mb-3">
+                            <div class="border p-3 rounded bg-light">
+                                {{ img_form.as_p }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success btn-lg">Salveaza Produsul</button>
+    </form>
+</div>
+{% endblock %}

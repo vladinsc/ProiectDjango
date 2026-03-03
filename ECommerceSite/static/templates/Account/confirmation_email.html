@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ro">
+<body>
+    <div style="text-align: center;">
+        <img src="cid:logo" alt="Logo Site" width="150">
+
+        <h2>Bun venit, {{ first_name }} {{ last_name }}!</h2>
+        <p>Salut <strong>{{ username }}</strong>, te-ai inregistrat cu succes.</p>
+
+        <p>Te rugam sa confirmi adresa de email dand click pe link-ul de mai jos:</p>
+
+        <p>
+            <a href="{{ confirmation_link }}" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none;">
+                Confirma Email-ul
+            </a>
+        </p>
+
+        <p>Sau copiaza acest link in browser:</p>
+        <p>{{ confirmation_link }}</p>
+    </div>
+</body>
+</html>

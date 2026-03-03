@@ -1,0 +1,33 @@
+{%extends '../master.html'%}
+{% block title %} Access Interzis {% endblock %}
+{% block content %}
+<div class="container">
+        <h3>
+            {% if user.is_authenticated %}
+                Salut {{ user.username }}
+            {% else %}
+                Salut preastimate domn anonim
+            {% endif %}
+        </h3>
+
+        <h1>{{ titlu|default:"Eroare 403" }}</h1>
+
+        <p>Ne pare rau, dar nu este permis accesul la resursa curenta.</p>
+
+        <p><strong>Motiv:</strong> {{ mesaj_personalizat }}</p>
+
+        <hr>
+
+        <p>Ati tntalnit aceasta eroare de {{ count }} ori in aceasta sesiune.</p>
+
+        {% if count > n_max %}
+            <div class="warning">
+                ATENTIE: Ati accesat zone interzise de prea multe ori ({{ count }} > {{ n_max }})!
+                Activitatea dumneavoastra ar putea fi monitorizata.
+            </div>
+        {% endif %}
+
+        <br><br>
+        <a href="/">Inapoi la prima pagina</a>
+    </div>
+{%endblock%}

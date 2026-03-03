@@ -1,0 +1,235 @@
+
+{% extends "../master.html" %}
+{% block title %} {{user.username}}'s cart {% endblock %}
+{% block other %}
+<style>
+
+    .cart-list {
+        list-style-type: none;
+        padding: 0;
+    }
+    .cart-item {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+    }
+    .cart-item-info {
+        display: flex;
+        align-items: center;
+        flex: 2;
+    }
+    .cart-item-price, .cart-item-qty, .cart-item-subtotal, .cart-item-actions {
+        flex: 1;
+        text-align: center;
+    }
+    .cart-image {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        margin-right: 15px;
+        border-radius: 4px;
+    }
+    .qty-controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+    }
+</style>
+{% endblock %}
+{%block content %}
+<div class="container mt-4">
+    <h2>Cosul de cumparaturi</h2>
+
+    <ul id="cartList" class="cart-list">
+        </ul>
+
+    <div id="emptyCartMessage" style="display: none; text-align: center; margin: 20px;">
+        <p>Cosul tau este gol.</p>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12 text-right" style="text-align: right; border-top: 2px solid #eee; padding-top: 20px;">
+            <h4>Numar total produse: <span id="totalCount">0</span></h4>
+            <h3>Total de plata: <span id="grandTotal">0.00</span> RON</h3>
+            <button id="btnBuy" class="btn btn-success btn-lg mt-3" onclick="placeOrder()">Plaseaza Comanda</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+    const allProducts = {{ products_json|safe }};
+    const CART_KEY = 'my_shop_cart_v1';
+    function getCart() {
+        return JSON.parse(localStorage.getItem(CART_KEY)) || {};
+    }
+
+    function saveCart(cart) {
+        localStorage.setItem(CART_KEY, JSON.stringify(cart));
+        renderCart();
+    }
+    function renderCart() {
+        const cart = getCart();
+        const listContainer = document.getElementById('cartList');
+        const emptyMsg = document.getElementById('emptyCartMessage');
+
+        listContainer.innerHTML = '';
+
+        let grandTotal = 0;
+        let totalCount = 0;
+        let hasItems = false;
+
+        for (const [id, itemData] of Object.entries(cart)) {
+            const productInfo = allProducts.find(p => p.id == id);
+
+            if (productInfo) {
+                hasItems = true;
+                let qty = 0;
+                if (typeof itemData === 'object' && itemData !== null) {
+                    qty = itemData.qty || itemData.quantity || 0;
+                } else {
+                    qty = parseInt(itemData);
+                }
+
+                const subtotal = productInfo.price * qty;
+                grandTotal += subtotal;
+                totalCount += qty;
+
+                const li = document.createElement('li');
+                li.className = 'cart-item';
+                li.innerHTML = `
+                    <div class="cart-item-info">
+                        <img src="${productInfo.image}" class="cart-image" alt="${productInfo.name}">
+                        <div>
+                            <a href="/product/${productInfo.slug}" style="font-weight: bold; font-size: 1.1em;">
+                                ${productInfo.name}
+                            </a>
+                            <div style="font-size: 0.9em; color: #666;">
+                                Pret: ${productInfo.price.toFixed(2)} RON
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cart-item-qty">
+                        <div class="qty-controls">
+                            <button class="btn btn-sm btn-secondary" onclick="updateQty(${productInfo.id}, -1)">-</button>
+                            <input type="text" value="${qty}" readonly style="width: 40px; text-align: center; border: 1px solid #ccc; border-radius: 3px;">
+                            <button class="btn btn-sm btn-secondary" onclick="updateQty(${productInfo.id}, 1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="cart-item-subtotal">
+                        <strong>${subtotal.toFixed(2)} RON</strong>
+                    </div>
+
+                    <div class="cart-item-actions">
+                        <button class="btn btn-sm btn-danger" onclick="removeItem(${productInfo.id})">Sterge</button>
+                    </div>
+                `;
+
+                listContainer.appendChild(li);
+            }
+        }
+        if (!hasItems) {
+            emptyMsg.style.display = 'block';
+        } else {
+            emptyMsg.style.display = 'none';
+        }
+
+        document.getElementById('totalCount').innerText = totalCount;
+        document.getElementById('grandTotal').innerText = grandTotal.toFixed(2);
+    }
+
+    function updateQty(id, change) {
+        let cart = getCart();
+
+        if (cart[id]) {
+            let currentQty = 0;
+            if (typeof cart[id] === 'object') {
+                currentQty = cart[id].qty || cart[id].quantity || 0;
+            } else {
+                currentQty = parseInt(cart[id]);
+            }
+
+            let newQty = currentQty + change;
+
+            if (newQty < 1) return;
+
+            if (typeof cart[id] === 'object') {
+                if(cart[id].qty !== undefined) cart[id].qty = newQty;
+                if(cart[id].quantity !== undefined) cart[id].quantity = newQty;
+            } else {
+                cart[id] = newQty;
+            }
+
+            saveCart(cart);
+        }
+    }
+    function removeItem(id) {
+        if(confirm("Esti sigur ca vrei sa stergi acest produs?")) {
+            let cart = getCart();
+            delete cart[id];
+            saveCart(cart);
+
+            if (typeof updateUI === 'function') {
+                updateUI();
+            }
+        }
+    }
+    function placeOrder() {
+    const cart = getCart();
+
+
+    if (Object.keys(cart).length === 0) {
+        alert("Cosul este gol!");
+        return;
+    }
+
+    if (!confirm("Confirmi plasarea comenzii?")) {
+        return;
+    }
+    const btn = document.getElementById('btnBuy');
+    btn.disabled = true;
+    btn.innerText = "Se proceseaza...";
+    fetch('{% url "place_order" %}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify(cart)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert("Comanda a fost plasata cu succes! Vei primi factura pe email.");
+            localStorage.removeItem(CART_KEY);
+            renderCart();
+            window.location.href = "/";
+        } else {
+            alert("Eroare: " + data.message);
+            btn.disabled = false;
+            btn.innerText = "Plaseaza Comanda";
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert("A aparut o eroare de comunicare cu serverul.");
+        btn.disabled = false;
+        btn.innerText = "Cumpara Produsele";
+    });
+}
+
+    document.addEventListener('DOMContentLoaded', () => {
+        renderCart();
+    });
+
+</script>
+{% endblock %}

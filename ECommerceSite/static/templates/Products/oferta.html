@@ -1,0 +1,19 @@
+{% extends "../master.html" %}
+{% block title %} {{name}} {% endblock %}
+{% block other %}
+    <style>
+  .product-image {
+    max-width: 300px;   /* sau orice dimensiune dorești */
+    height: auto;       /* păstrează proporțiile */
+    margin: 10px;
+    border-radius: 10px; /* colțuri rotunjite, opțional */
+    object-fit: cover;  /* decupează imaginea frumos dacă are alt raport */
+    display: inline-block; /* ca să stea mai multe pe rând */
+  }
+</style>
+ {% endblock %}
+{% block content %}
+<h1 style="color:#0dcaf0"> Felicitari benificiezi de o oferta de 50% la toate produsele, doar pana te deloghezi.</h1><br>
+<h2 >Mergi la pagina <a href="{% url 'products' %}">Produse</a></h2>
+
+{% endblock %}

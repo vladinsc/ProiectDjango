@@ -1,0 +1,28 @@
+{% extends "../master.html" %}
+{% block other %}
+
+{% endblock %}
+
+{% block content %}
+<h1>Contactați-ne</h1>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="error">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+        {{ form.as_ul }}
+        <button type="submit">Trimite Mesaj</button>
+    </form>
+{% endblock %}

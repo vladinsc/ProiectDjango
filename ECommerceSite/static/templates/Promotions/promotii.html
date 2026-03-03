@@ -1,0 +1,91 @@
+{% extends '../master.html' %}
+{% block title %} Creare promotii {% endblock %}
+{%block other%}
+
+<style>
+    ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    ul li {
+        margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textt {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    textt {
+        height: 100px;
+        resize: vertical;
+    }
+</style>
+{%endblock%}
+{%block content%}
+<div style="max-width: 800px; margin: 0 auto; padding: 20px;">
+    
+    <h2>Trimite Promotie Noua</h2>
+    <p>Completeaza detaliile ofertei. Mailurile vor fi trimise automat catre utilizatorii eligibili.</p>
+
+    {% if messages %}
+        <div style="margin-bottom: 20px;">
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}" 
+                     style="padding: 10px; border-radius: 5px; margin-bottom: 5px; 
+                            {% if message.tags == 'success' %}background-color: #d4edda; color: #155724;{% endif %}
+                            {% if message.tags == 'warning' %}background-color: #fff3cd; color: #856404;{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="post" style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; border: 1px solid #ddd;">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div style="color: red; margin-bottom: 15px;">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        {% for field in form %}
+            <div class="form-group" style="margin-bottom: 20px;">
+                
+                <label for="{{ field.id_for_label }}" style="font-weight: bold; display: block; margin-bottom: 5px;">
+                    {{ field.label }}:
+                </label>
+
+                <div class="field-wrapper">
+                    {{ field }}
+                </div>
+
+                {% if field.help_text %}
+                    <small style="color: #666; font-size: 0.9em;">{{ field.help_text }}</small>
+                {% endif %}
+
+                {% if field.errors %}
+                    <div style="color: red; font-size: 0.9em; margin-top: 5px;">
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <hr>
+
+        <button type="submit" 
+                style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
+            Slaveaza Promotia si Trimite Mailuri
+        </button>
+    </form>
+</div>
+
+{%endblock%}
